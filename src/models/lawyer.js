@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
   class Lawyer extends Model {
     static associate(models) {
       // Un abogado tiene muchos casos
+      Lawyer.hasMany(models.LegalCase, {
+        foreignKey: 'lawyerId',
+        as: 'cases',
+      });
     }
   }
   
