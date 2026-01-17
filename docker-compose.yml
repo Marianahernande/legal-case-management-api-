@@ -1,13 +1,19 @@
-version: "3.8"
+version: '3.8'
 
 services:
   postgres:
     image: postgres:15
-    container_name: legal_db
-    restart: always
+    container_name: legal_cases_postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: legal_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: legal_cases_db
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
