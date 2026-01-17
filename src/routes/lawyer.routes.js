@@ -1,29 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const lawyerController = require('../controllers/lawyer.controller');
+const { authenticateToken } = require('../middlewares/auth.middleware');
 
+// Todas las rutas requieren autenticación
+router.use(authenticateToken);
 
-// Ruta para listar abogados
-router.get('/', (req, res) => {
-  // Por ahora, datos de prueba (hardcoded)
-  const abogados = [
-    {
-      id: 1,
-      name: 'Carlos Pérez',
-      email: 'carlos@bufete.com',
-      specialization: 'Derecho Laboral'
-    },
-    {
-      id: 2,
-      name: 'María González',
-      email: 'maria@bufete.com',
-      specialization: 'Derecho Civil'
-    }
-  ];
+// POST /api/lawyers - Crear abogado
+router.post('/', lawyerController.create);
 
-  res.json({
-    success: true,
-    data: abogados
-  });
-});
+// GET /api/lawyers - Listar abogados
+router.get('/', lawyerController.getAll);
+
+// GET /api/lawyers/:id - Obtener abogado por ID
+router.get('/:id', lawyerController.getById);
 
 module.exports = router;
