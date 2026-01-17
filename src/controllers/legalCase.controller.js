@@ -52,6 +52,40 @@ class LegalCaseController {
       next(error);
     }
   }
+
+  async assignLawyer(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { lawyer_id } = req.body;
+
+      const legalCase = await legalCaseService.assignLawyer(id, lawyer_id);
+
+      return res.status(200).json({
+        success: true,
+        message: 'Lawyer assigned successfully',
+        data: legalCase,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async transferCase(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { new_lawyer_id } = req.body;
+
+      const result = await legalCaseService.transferCase(id, new_lawyer_id);
+
+      return res.status(200).json({
+        success: true,
+        message: 'Case transferred successfully',
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new LegalCaseController();
