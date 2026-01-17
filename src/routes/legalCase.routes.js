@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const legalCaseController = require('../controllers/legalCase.controller');
 const { authenticateToken } = require('../middlewares/auth.middleware');
+const { validate } = require('../middlewares/validation.middleware');
+const { createLegalCaseSchema } = require('../validations/legalCase.validation');
 
 // Todas las rutas requieren autenticación
 router.use(authenticateToken);
 
-// POST /api/legal-cases - Crear caso legal
-router.post('/', legalCaseController.create);    
+// POST /api/legal-cases - Crear caso legal (con validación)
+router.post('/', validate(createLegalCaseSchema), legalCaseController.create);
 
 // GET /api/legal-cases - Listar casos legales
 router.get('/', legalCaseController.getAll);
