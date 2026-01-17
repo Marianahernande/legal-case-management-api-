@@ -1,24 +1,18 @@
-const { Router } = require('express');
-const router = Router();
+const express = require('express');
+const router = express.Router();
+const legalCaseController = require('../controllers/legalCase.controller');
+const { authenticateToken } = require('../middlewares/auth.middleware');
 
-router.post('/', (req, res) => {
-  res.json({ message: 'create legal case' });
-});
+// Todas las rutas requieren autenticación
+router.use(authenticateToken);
 
-router.get('/', (req, res) => {
-  res.json({ message: 'list legal cases' });
-});
+// POST /api/legal-cases - Crear caso legal
+router.post('/', legalCaseController.create);    
 
-router.get('/:id', (req, res) => {
-  res.json({ message: 'get legal case by id' });
-});
+// GET /api/legal-cases - Listar casos legales
+router.get('/', legalCaseController.getAll);
 
-router.put('/:id/assign', (req, res) => {
-  res.json({ message: 'assign lawyer' });
-});
-
-router.put('/:id/transfer', (req, res) => {
-  res.json({ message: 'transfer case' });
-});
+// GET /api/legal-cases/:id - Obtener caso por ID
+router.get('/:id', legalCaseController.getById);
 
 module.exports = router;
