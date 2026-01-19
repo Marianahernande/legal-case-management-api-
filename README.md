@@ -64,9 +64,9 @@ npm run db:migrate
 npm run db:seed
 ```
 
-## 🎮 Ejecución
+##  Ejecución
 
-### Modo desarrollo (con hot reload)
+### Modo desarrollo 
 ```bash
 npm run dev
 ```
